@@ -89,13 +89,13 @@ try {
 } catch (error) {
   fail(`mcp.json is not valid JSON: ${error.message}`);
 }
-const server = mcp?.mcpServers?.glasser;
-if (!server) fail("mcp.json must declare mcpServers.glasser");
+const server = mcp?.mcpServers?.["glasser-seo"];
+if (!server) fail("mcp.json must declare mcpServers[\"glasser-seo\"] — the connector name users see, distinct from the Glasser plugin's \"glasser\"");
 if (server && server.url !== MCP_URL) fail(`mcp.json url must be ${MCP_URL}, got ${JSON.stringify(server?.url)}`);
 if (server && "headers" in server) fail("mcp.json must not carry headers — the server signs the user in with OAuth");
 if (/\$\{/.test(mcpRaw)) fail("mcp.json must not reference a ${VARIABLE} — there is no Key to fill in");
 // Anthropic's directory requires every remote MCP server to name its transport.
-if (server && !["http", "sse", "ws"].includes(server.type)) fail(`mcp.json glasser.type must be http, sse or ws, got ${JSON.stringify(server.type)}`);
+if (server && !["http", "sse", "ws"].includes(server.type)) fail(`mcp.json glasser-seo.type must be http, sse or ws, got ${JSON.stringify(server.type)}`);
 
 // 4. Component discovery is left to the default locations and the portable
 //    manifest; the Claude and Codex manifests only carry listing fields.

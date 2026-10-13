@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/mcp.schema.json",
   "mcpServers": {
-    "glasser": {
+    "glasser-seo": {
       "type": "http",
       "url": "https://api.glasser.ai/mcp?toolset=seo&utm_source=glasser-seo-audit&utm_medium=plugin"
     }
