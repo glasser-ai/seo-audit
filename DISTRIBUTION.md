@@ -8,7 +8,7 @@ consistent.
 | Channel | How it reads this repo | Status |
 |---|---|---|
 | Claude Code, self-hosted marketplace | `/plugin marketplace add glasser-ai/seo-audit` | live on push |
-| Anthropic plugin directory (claude.ai, Claude Desktop) | claude.ai/directory/manage: submit the Glasser MCP server as an MCP connector, then this repo as a Plugin bundle (path `plugins/glasser-seo-audit`) | not submitted |
+| Anthropic plugin directory (claude.ai, Claude Desktop) | claude.ai/directory/manage: submit the Glasser MCP server as an MCP connector, then this repo as a Plugin bundle (path `plugins/glasser-seo-audit`) | plugin bundle submitted 2026-10-13, in review; push webhook connected; MCP connector not submitted |
 | ChatGPT / Codex plugin directory | ZIP of `plugins/glasser-seo-audit` uploaded at platform.openai.com/plugins | not submitted |
 
 ## Release checklist
