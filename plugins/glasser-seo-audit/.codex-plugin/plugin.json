@@ -1,6 +1,6 @@
 {
   "name": "glasser-seo-audit",
-  "version": "0.2.7",
+  "version": "0.2.8",
   "description": "Audit how your own website performs in search, on Semrush, Ahrefs, DataForSEO and Serpstat data. Name a domain and it checks technical and on-page health, rankings and their monthly trend, keyword opportunities, the competitors and keyword gaps that cost you traffic, backlinks and backlink gaps, live search results, and how AI answers cite you. Each area gets a score, and the fixes come ranked by impact with the numbers behind them. Rerun it later to see what changed.",
   "author": {
     "name": "Glasser",
@@ -106,6 +106,7 @@
             }
           ]
         },
+        "demo_recording_url": "https://drive.google.com/file/d/1f8uCYIZgb3TuiJkyEaOnR8mzs3uxo5PS/view?usp=sharing",
         "commerce": false,
         "commerce_description": "Nothing is sold in ChatGPT. Users sign in to an existing Glasser account with OAuth; no checkout, subscription or upgrade flow appears in the plugin."
       },
