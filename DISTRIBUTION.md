@@ -29,14 +29,13 @@ run …); with it, fourteen SEO tools, each one action of the `seo_research`
 Solution, plus `runs_get` and `balance`. OAuth is the same `/mcp` resource:
 the query string is dropped when the token's audience is checked.
 
-`skills/seo-audit/SKILL.md` is the audit workflow on those tools: plan and
-go-ahead, an eight-step diagnosis (baseline, trend, quick wins, competitors
-and gaps, technical health, authority, AI visibility, report), and the report
-format. It started from `skills/seo-audit/SKILL.md` in
-[glasser-ai/skills](https://github.com/glasser-ai/skills), which drives the
-broker verbs instead; port changes to the process or report format by hand.
-The typical charges in the skill's tool table were observed in October 2026;
-re-check them when a provider's price changes.
+`skills/seo-audit/SKILL.md` is `skills/seo-audit/SKILL.md` from
+[glasser-ai/skills](https://github.com/glasser-ai/skills) with only what the
+tools force changed: the opening (this plugin's connector instead of the CLI
+install), "endpoint" → "tool" in step 3, and the dimensions table (tool names
+instead of catalog search queries). Inputs, the process, scoring, the report
+format and the untrusted-input rule are the original's text. Port changes to
+those sections by hand; do not add steps the original does not have.
 
 ## Naming providers
 

@@ -1,15 +1,14 @@
 # Glasser SEO Audit
 
-An SEO audit of any website. Give it a domain and it reads rankings and their
-trend, finds quick wins, compares the site with competitors keyword by keyword
-and link by link, crawls it for technical problems, checks key pages and AI
-search visibility, and turns the findings into a prioritised action plan. Run
+An SEO audit of your own website. Give it a domain and it checks technical
+and on-page health, rankings and their trend, keyword opportunities,
+competitors, backlinks, search results and AI search visibility, scores the
+site, and turns the findings into a prioritised action plan. Run
 it again later and it reports what changed.
 
 The data comes from Semrush, Ahrefs, DataForSEO and Serpstat through
 Glasser's SEO tools, bought per call through [Glasser](https://glasser.ai) —
-no subscription to any of them. Before the audit runs, it shows the plan and its estimated cost
-and waits for your go-ahead.
+no subscription to any of them.
 
 ## Install
 

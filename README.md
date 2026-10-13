@@ -1,12 +1,11 @@
 # Glasser SEO Audit
 
-An SEO audit of any website, for Claude and ChatGPT.
+An SEO audit of your own website, for Claude and ChatGPT.
 
-Give it a domain — yours, a client's or a competitor's. It reads where the
-site ranks and how that trend moves, finds quick wins, lines the site up
-against competitors keyword by keyword and link by link, crawls it for
-technical problems, checks its key pages and its visibility in AI answers, and
-writes a prioritised action plan. Run it again later and it reports what was
+Give it a domain. It checks technical and on-page health, rankings and their
+trend, keyword opportunities, organic competitors and the keywords they rank
+for that you do not, backlinks, search results and AI search visibility,
+scores the site, and writes a prioritised action plan. Run it again later and it reports what was
 fixed, what is new and what moved.
 
 ## Where the data comes from
@@ -26,9 +25,7 @@ The plugin connects to Glasser's SEO tools (`https://api.glasser.ai/mcp?toolset=
 | `inspect_ai_visibility`, `discover_ai_citations` | citations in AI answers | Ahrefs, DataForSEO |
 
 You need no account with any of them. One Glasser sign-in, pay per call, no
-subscription. Before the audit runs, it shows the plan and its estimated cost
-and waits for your go-ahead; a core audit is typically $0.30–0.60. Failed calls
-cost $0.00. The report ends with the total charged and a link to every call it
+subscription. Every call reports its exact charge; failed calls cost $0.00. The report ends with the total charged and a link to every call it
 used.
 
 ## Install
