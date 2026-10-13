@@ -24,9 +24,8 @@ The plugin connects to Glasser's SEO tools (`https://api.glasser.ai/mcp?toolset=
 | `audit_site`, `inspect_page` | site crawl, single-page check | DataForSEO |
 | `inspect_ai_visibility`, `discover_ai_citations` | citations in AI answers | Ahrefs, DataForSEO |
 
-You need no account with any of them. One Glasser sign-in, pay per call, no
-subscription. Every call reports its exact charge; failed calls cost $0.00. The report ends with the total charged and a link to every call it
-used.
+You need no account with any of them — one Glasser account covers the data
+calls. The report ends with a link to every call it used.
 
 ## Install
 

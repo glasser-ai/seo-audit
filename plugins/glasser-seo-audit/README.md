@@ -7,8 +7,7 @@ site, and turns the findings into a prioritised action plan. Run
 it again later and it reports what changed.
 
 The data comes from Semrush, Ahrefs, DataForSEO and Serpstat through
-Glasser's SEO tools, bought per call through [Glasser](https://glasser.ai) —
-no subscription to any of them.
+Glasser's SEO tools, through a [Glasser](https://glasser.ai) account.
 
 ## Install
 

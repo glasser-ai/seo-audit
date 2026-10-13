@@ -7,15 +7,15 @@
     "url": "https://glasser.ai"
   },
   "metadata": {
-    "description": "Glasser SEO Audit: audit your own website on Semrush, Ahrefs and DataForSEO data, pay per call.",
-    "version": "0.2.2"
+    "description": "Glasser SEO Audit: audit your own website on Semrush, Ahrefs and DataForSEO data.",
+    "version": "0.2.3"
   },
   "plugins": [
     {
       "name": "glasser-seo-audit",
       "source": "./plugins/glasser-seo-audit",
-      "description": "SEO audit of your own website on real data from Semrush, Ahrefs, DataForSEO and Serpstat, with no subscription to any of them. Give a domain and get technical and on-page health, rankings, keyword opportunities, competitors and keyword gaps, backlinks, search results and AI search visibility, scored and turned into a prioritised action plan. Run it again to see what changed. Pay per call through Glasser; failed calls cost $0.00.",
-      "version": "0.2.2",
+      "description": "SEO audit of your own website on data from Semrush, Ahrefs, DataForSEO and Serpstat. Give a domain and get technical and on-page health, rankings, keyword opportunities, competitors and keyword gaps, backlinks, search results and AI search visibility, scored and turned into a prioritised action plan. Run it again to see what changed. Requires a Glasser account.",
+      "version": "0.2.3",
       "author": {
         "name": "Glasser",
         "url": "https://glasser.ai"
