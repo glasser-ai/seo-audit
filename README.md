@@ -1,31 +1,35 @@
 # Glasser SEO Audit
 
-An SEO audit of your own website, for Claude and ChatGPT.
+An SEO audit of any website, for Claude and ChatGPT.
 
-Give it a domain. It checks technical and on-page health, rankings, keyword
-opportunities, backlinks, organic competitors and AI search visibility,
-scores the site out of 100, and writes a prioritised action plan: what blocks
-indexing now, what to fix in the next 30 days, what to build this quarter.
-Run it again later and it reports what was fixed, what is new and what moved.
+Give it a domain — yours, a client's or a competitor's. It reads where the
+site ranks and how that trend moves, finds quick wins, lines the site up
+against competitors keyword by keyword and link by link, crawls it for
+technical problems, checks its key pages and its visibility in AI answers, and
+writes a prioritised action plan. Run it again later and it reports what was
+fixed, what is new and what moved.
 
 ## Where the data comes from
 
-| Dimension | Providers |
-|---|---|
-| Rankings, organic keywords, top pages | Ahrefs, Semrush, DataForSEO, Serpstat |
-| Keyword volume, difficulty, intent | Ahrefs, Semrush, DataForSEO, Serpstat |
-| Organic competitors and keyword gaps | Ahrefs, Semrush, DataForSEO, Serpstat |
-| Backlinks and referring domains | Ahrefs, DataForSEO, Serpstat |
-| Site crawl, on-page checks, Lighthouse | DataForSEO |
-| Live SERPs and AI Overviews | SerpApi, DataForSEO |
-| AI search visibility | Ahrefs, DataForSEO |
+The plugin connects to Glasser's SEO tools (`https://api.glasser.ai/mcp?toolset=seo`):
 
-You need no account with any of them. The plugin reaches them through
-[Glasser](https://glasser.ai): one sign-in, pay per call, no subscription.
-Before the audit runs, it shows the plan — pages sampled, keywords,
-competitors, provider per dimension — with the estimated cost, and waits for
-your go-ahead. Failed calls and empty results cost $0.00. The report ends with
-the total charged and a link to every call it used.
+| Tool | Data | Providers |
+|---|---|---|
+| `inspect_domain`, `list_ranked_keywords` | organic overview, ranked keywords | DataForSEO, Serpstat, Ahrefs |
+| `inspect_search_visibility` | month-by-month keyword count and traffic | Semrush, DataForSEO |
+| `discover_competitors` | organic competitors | DataForSEO, Serpstat, Ahrefs |
+| `compare_keyword_gap` | the site vs up to four competitors, keyword by keyword | Semrush, DataForSEO |
+| `inspect_keywords`, `research_keywords` | volume, difficulty, keyword ideas | Semrush, Serpstat, DataForSEO, Ahrefs |
+| `inspect_serp` | live Google results | DataForSEO, Serper |
+| `inspect_backlinks`, `compare_backlink_gap` | backlink profile, link-building prospects | Semrush, DataForSEO, Ahrefs |
+| `audit_site`, `inspect_page` | site crawl, single-page check | DataForSEO |
+| `inspect_ai_visibility`, `discover_ai_citations` | citations in AI answers | Ahrefs, DataForSEO |
+
+You need no account with any of them. One Glasser sign-in, pay per call, no
+subscription. Before the audit runs, it shows the plan and its estimated cost
+and waits for your go-ahead; a core audit is typically $0.30–0.60. Failed calls
+cost $0.00. The report ends with the total charged and a link to every call it
+used.
 
 ## Install
 
@@ -42,7 +46,8 @@ the client's plugin directory.
 Then ask, for example:
 
 - *Run an SEO audit of example.com for the US market.*
-- *Why is example.com not ranking, and what should we fix first?*
+- *What keywords do my competitors rank for that example.com does not?*
+- *Is example.com cited in AI answers, and by which pages?*
 - *Here is last month's audit — what has changed?*
 
 ## Authentication
@@ -59,7 +64,7 @@ For reviewers and anyone auditing what this plugin reaches.
 
 | Endpoint | Used by | Credential |
 |---|---|---|
-| `https://api.glasser.ai/mcp` | the MCP server config | the OAuth access token the client obtains at sign-in |
+| `https://api.glasser.ai/mcp?toolset=seo` | the MCP server config (the SEO toolset of Glasser's MCP server) | the OAuth access token the client obtains at sign-in |
 | `https://app.glasser.ai/api/auth` | the client, at sign-in | OAuth authorization server: discovery, client registration, tokens |
 | `https://app.glasser.ai` | sign-in and the Workspace consent page; Key management | your browser session |
 

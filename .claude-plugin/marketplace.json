@@ -7,15 +7,15 @@
     "url": "https://glasser.ai"
   },
   "metadata": {
-    "description": "Glasser SEO Audit: audit your own website on Ahrefs, Semrush and DataForSEO data, pay per call.",
-    "version": "0.1.0"
+    "description": "Glasser SEO Audit: audit any website on Semrush, Ahrefs and DataForSEO data, pay per call.",
+    "version": "0.2.0"
   },
   "plugins": [
     {
       "name": "glasser-seo-audit",
       "source": "./plugins/glasser-seo-audit",
-      "description": "SEO audit of your own website on real data from Ahrefs, Semrush, DataForSEO, Serpstat and SerpApi, with no subscription to any of them. Give a domain and get technical and on-page checks, rankings, keyword opportunities, backlinks, competitors and AI search visibility, scored and turned into a prioritised action plan. Run it again to see what changed. You see the estimated cost before it starts and pay per call through Glasser; failed calls and empty results cost $0.00.",
-      "version": "0.1.0",
+      "description": "SEO audit of any website on real data from Semrush, Ahrefs, DataForSEO and Serpstat, with no subscription to any of them. Give a domain and get rankings and their trend, quick wins, keyword and backlink gaps against competitors, a technical crawl, page checks and AI search visibility, turned into a prioritised action plan. Run it again to see what changed. You approve the plan before it starts and pay per call through Glasser; failed calls cost $0.00.",
+      "version": "0.2.0",
       "author": {
         "name": "Glasser",
         "url": "https://glasser.ai"
@@ -31,6 +31,8 @@
         "technical seo",
         "keyword research",
         "rankings",
+        "backlink gap",
+        "keyword gap",
         "backlinks",
         "competitor analysis",
         "ai search visibility",
@@ -38,7 +40,6 @@
         "semrush",
         "dataforseo",
         "serpstat",
-        "serpapi",
         "glasser"
       ]
     }

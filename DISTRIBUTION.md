@@ -20,27 +20,28 @@ consistent.
 3. `node scripts/check-manifests.mjs` and `claude plugin validate --strict .`
 4. Commit and push.
 
-## The skill
+## The MCP server and the skill
 
-`skills/seo-audit/SKILL.md` is ported from `skills/seo-audit/SKILL.md` in
-[glasser-ai/skills](https://github.com/glasser-ai/skills) and rewritten for
-the MCP tools. It differs from that source in three ways:
+The plugin connects to the SEO toolset of Glasser's MCP server,
+`https://api.glasser.ai/mcp?toolset=seo` (Glasser ADR-0031). Without
+`toolset` the same server serves the seven broker verbs (search / inspect /
+run …); with it, fourteen SEO tools, each one action of the `seo_research`
+Solution, plus `runs_get` and `balance`. OAuth is the same `/mcp` resource:
+the query string is dropped when the token's audience is checked.
 
-- **Setup** follows [glasser-ai/claude-plugin](https://github.com/glasser-ai/claude-plugin):
-  connect the connector, set its tools to Always allow, never paste a Key.
-- **Price the plan** is new: the audit `inspect`s one Endpoint per dimension,
-  estimates the total, and waits for the user's go-ahead before the first
-  `run`.
-- **The report** ends with the total charged and a `run_url` per Run, and is
-  saved to a file when the client can, so the next audit can compare.
-
-When the source's process, scoring or report format changes, port the change
-here by hand and bump the version.
+`skills/seo-audit/SKILL.md` is the audit workflow on those tools: plan and
+go-ahead, an eight-step diagnosis (baseline, trend, quick wins, competitors
+and gaps, technical health, authority, AI visibility, report), and the report
+format. It started from `skills/seo-audit/SKILL.md` in
+[glasser-ai/skills](https://github.com/glasser-ai/skills), which drives the
+broker verbs instead; port changes to the process or report format by hand.
+The typical charges in the skill's tool table were observed in October 2026;
+re-check them when a provider's price changes.
 
 ## Naming providers
 
-The description, the READMEs and the skill name Ahrefs, Semrush, DataForSEO,
-Serpstat and SerpApi. Each was confirmed in the Glasser catalog with `search`
+The description, the READMEs and the skill name Semrush, Ahrefs, DataForSEO
+and Serpstat (and the README Serper). Each was confirmed in the Glasser catalog with `search`
 before release. Re-check before adding or removing one, and do not name a
 provider reached only through a scraper.
 

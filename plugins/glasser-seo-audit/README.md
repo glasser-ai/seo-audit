@@ -1,13 +1,14 @@
 # Glasser SEO Audit
 
-An SEO audit of your own website. Give it a domain and it checks technical
-and on-page health, rankings, keyword opportunities, backlinks, competitors
-and AI search visibility, scores the site, and turns the findings into a
-prioritised action plan. Run it again later and it reports what changed.
+An SEO audit of any website. Give it a domain and it reads rankings and their
+trend, finds quick wins, compares the site with competitors keyword by keyword
+and link by link, crawls it for technical problems, checks key pages and AI
+search visibility, and turns the findings into a prioritised action plan. Run
+it again later and it reports what changed.
 
-The data comes from Ahrefs, Semrush, DataForSEO, Serpstat and SerpApi,
-bought per call through [Glasser](https://glasser.ai) — no subscription to
-any of them. Before the audit runs, it shows the plan and its estimated cost
+The data comes from Semrush, Ahrefs, DataForSEO and Serpstat through
+Glasser's SEO tools, bought per call through [Glasser](https://glasser.ai) —
+no subscription to any of them. Before the audit runs, it shows the plan and its estimated cost
 and waits for your go-ahead.
 
 ## Install
@@ -28,7 +29,7 @@ Authentication and the list of network endpoints are in the
 | Skill | `skills/seo-audit/SKILL.md` |
 | MCP server | `.mcp.json` (and `mcp.json` for clients that read that name) |
 
-The MCP config points at `https://api.glasser.ai/mcp` and carries no
+The MCP config points at `https://api.glasser.ai/mcp?toolset=seo` and carries no
 credentials: the server speaks OAuth, so the client signs the user in on
 first use. The plugin ships no executable code.
 

@@ -6,9 +6,10 @@ import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
 
 const NAME = "glasser-seo-audit";
-// The utm pair only tells the server the install came from this plugin. OAuth
-// takes its resource from the server's metadata, which has no query string.
-const MCP_URL = "https://api.glasser.ai/mcp?utm_source=glasser-seo-audit&utm_medium=plugin";
+// toolset=seo selects the SEO tools on the shared /mcp (Glasser ADR-0031); the
+// utm pair tells the server the install came from this plugin. OAuth takes its
+// resource from the server's metadata, which has no query string.
+const MCP_URL = "https://api.glasser.ai/mcp?toolset=seo&utm_source=glasser-seo-audit&utm_medium=plugin";
 
 const root = process.cwd();
 const plugin = path.join(root, "plugins", NAME);
