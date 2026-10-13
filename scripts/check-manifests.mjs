@@ -76,13 +76,24 @@ for (const [label, description] of descriptions) {
   }
 }
 
-// 3. The MCP pair: byte-identical, valid JSON, and nothing but a URL. Claude
+// 3. The MCP pair: the same URL, valid JSON, and nothing but a URL. Claude
 //    Code reads .mcp.json, Agent Plugins clients read mcp.json; a symlink
 //    would break Windows checkouts. The server speaks OAuth, so a headers
 //    block or a ${VARIABLE} placeholder is a regression to the paste-a-Key setup.
 const mcpRaw = readFileSync(path.join(plugin, "mcp.json"), "utf8");
 const dotRaw = readFileSync(path.join(plugin, ".mcp.json"), "utf8");
-if (mcpRaw !== dotRaw) fail("mcp.json and .mcp.json must be byte-identical");
+// Claude Code reads .mcp.json and wants type "http"; Agent Plugins clients read
+// mcp.json, whose schema allows "streamable-http" (not "http"). Same server,
+// same URL, each file in its reader's vocabulary.
+let dotMcp = null;
+try {
+  dotMcp = JSON.parse(dotRaw);
+} catch (error) {
+  fail(`.mcp.json is not valid JSON: ${error.message}`);
+}
+const dotServer = dotMcp?.mcpServers?.["glasser-seo"];
+if (dotServer?.url !== MCP_URL) fail(`.mcp.json url must be ${MCP_URL}, got ${JSON.stringify(dotServer?.url)}`);
+if (dotServer?.type !== "http") fail(`.mcp.json glasser-seo.type must be http, got ${JSON.stringify(dotServer?.type)}`);
 let mcp = null;
 try {
   mcp = JSON.parse(mcpRaw);
@@ -95,7 +106,7 @@ if (server && server.url !== MCP_URL) fail(`mcp.json url must be ${MCP_URL}, got
 if (server && "headers" in server) fail("mcp.json must not carry headers — the server signs the user in with OAuth");
 if (/\$\{/.test(mcpRaw)) fail("mcp.json must not reference a ${VARIABLE} — there is no Key to fill in");
 // Anthropic's directory requires every remote MCP server to name its transport.
-if (server && !["http", "sse", "ws"].includes(server.type)) fail(`mcp.json glasser-seo.type must be http, sse or ws, got ${JSON.stringify(server.type)}`);
+if (server && server.type !== "streamable-http") fail(`mcp.json glasser-seo.type must be streamable-http, got ${JSON.stringify(server.type)}`);
 
 // 4. Component discovery is left to the default locations and the portable
 //    manifest; the Claude and Codex manifests only carry listing fields.

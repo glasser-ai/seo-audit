@@ -2,7 +2,7 @@
 name: seo-audit
 description: When the user wants to know how their own website is doing in search and what to do about it — an audit of technical health, rankings, keywords, backlinks and competitors, followed by a prioritised action plan; or a repeat of that audit to see what has changed. Also use when the user mentions "SEO audit", "why am I not ranking", "my traffic dropped", "SEO health check", "what should we fix first", "keyword opportunities", "who outranks us", "backlink profile", "monitor our SEO", or gives a domain and asks how it is performing in search. Input is the user's domain; output is an audit report with findings, an action plan, and a comparison to the previous audit when there is one. Runs on the Glasser SEO tools of this plugin (paid per call).
 metadata:
-  version: "0.2.4"
+  version: "0.2.5"
   category: seo
 ---
 

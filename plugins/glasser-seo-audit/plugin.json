@@ -1,8 +1,8 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "glasser-seo-audit",
-  "version": "0.2.4",
-  "description": "SEO audit of your own website on data from Semrush, Ahrefs, DataForSEO and Serpstat in one place. Give a domain and get technical and on-page health, rankings, keyword opportunities, competitors and keyword gaps, backlinks, search results and AI search visibility, scored and turned into a prioritised action plan: what to fix first and why. Run it again to see what changed.",
+  "version": "0.2.5",
+  "description": "SEO audit of your own website on data from Semrush, Ahrefs, DataForSEO and Serpstat in one place. Give a domain and get technical and on-page health, rankings, keyword opportunities, competitors and keyword gaps, backlinks, search results and AI search visibility, scored and turned into a prioritised action plan: what to fix first and why. Give it a previous report and it shows what changed.",
   "author": {
     "name": "Glasser",
     "url": "https://glasser.ai"

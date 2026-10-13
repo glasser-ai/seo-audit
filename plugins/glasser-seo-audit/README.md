@@ -3,11 +3,13 @@
 An SEO audit of your own website. Give it a domain and it checks technical
 and on-page health, rankings and their trend, keyword opportunities,
 competitors, backlinks, search results and AI search visibility, scores the
-site, and turns the findings into a prioritised action plan. Run
-it again later and it reports what changed.
+site, and turns the findings into a prioritised action plan. Give it a
+previous report and it shows what changed.
 
 The data comes from Semrush, Ahrefs, DataForSEO and Serpstat through
-Glasser's SEO tools, through a [Glasser](https://glasser.ai) account.
+Glasser's SEO tools. Calls run on your [Glasser](https://glasser.ai) account,
+and each data call consumes your Glasser workspace balance. See
+[glasser.ai/docs](https://glasser.ai/docs) for per-call pricing.
 
 ## Install
 

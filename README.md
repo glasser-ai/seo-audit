@@ -5,8 +5,8 @@ An SEO audit of your own website, for Claude and ChatGPT.
 Give it a domain. It checks technical and on-page health, rankings and their
 trend, keyword opportunities, organic competitors and the keywords they rank
 for that you do not, backlinks, search results and AI search visibility,
-scores the site, and writes a prioritised action plan. Run it again later and it reports what was
-fixed, what is new and what moved.
+scores the site, and writes a prioritised action plan. Give it a previous
+report and it shows what was fixed, what is new and what moved.
 
 ## Where the data comes from
 
@@ -24,8 +24,10 @@ The plugin connects to Glasser's SEO tools (`https://api.glasser.ai/mcp?toolset=
 | `audit_site`, `inspect_page` | site crawl, single-page check | DataForSEO |
 | `inspect_ai_visibility`, `discover_ai_citations` | citations in AI answers | Ahrefs, DataForSEO |
 
-You need no account with any of them — one Glasser account covers the data
-calls. The report ends with a link to every call it used.
+You need no account with any of them. Calls run on your Glasser account, and
+each data call consumes your Glasser workspace balance. See
+[glasser.ai/docs](https://glasser.ai/docs) for per-call pricing. The report
+ends with a link to every call it used.
 
 ## Install
 
@@ -77,13 +79,13 @@ plugins/glasser-seo-audit/
 ├── plugin.json                     portable manifest (Agent Plugins); clients discover the skill and MCP from it
 ├── .claude-plugin/plugin.json      Claude manifest and directory listing fields
 ├── .codex-plugin/plugin.json       ChatGPT / Codex display overlay
-├── .mcp.json, mcp.json             the Glasser MCP server, byte-identical
+├── .mcp.json, mcp.json             the Glasser MCP server, same URL (type http / streamable-http)
 ├── assets/                         icon
 └── skills/seo-audit/               the audit workflow and report format
 scripts/                            consistency check and the version bump
 ```
 
-Releasing: see [DISTRIBUTION.md](DISTRIBUTION.md).
+Support: [Discord](https://discord.gg/kM5eyKzx5a). Releasing: see [DISTRIBUTION.md](DISTRIBUTION.md).
 
 ## License
 

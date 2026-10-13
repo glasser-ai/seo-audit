@@ -8,8 +8,8 @@ consistent.
 | Channel | How it reads this repo | Status |
 |---|---|---|
 | Claude Code, self-hosted marketplace | `/plugin marketplace add glasser-ai/seo-audit` | live on push |
-| Anthropic plugin directory (claude.ai, Claude Desktop) | submitted through the directory form | not submitted |
-| ChatGPT / Codex plugin directory | `.codex-plugin/plugin.json` overlay | not submitted |
+| Anthropic plugin directory (claude.ai, Claude Desktop) | claude.ai/directory/manage: submit the Glasser MCP server as an MCP connector, then this repo as a Plugin bundle (path `plugins/glasser-seo-audit`) | not submitted |
+| ChatGPT / Codex plugin directory | ZIP of `plugins/glasser-seo-audit` uploaded at platform.openai.com/plugins | not submitted |
 
 ## Release checklist
 
@@ -53,9 +53,12 @@ provider reached only through a scraper.
 | `.codex-plugin/plugin.json` | ChatGPT, Codex | the `interface` block: display name, short description, prompts, icons |
 | `skills/seo-audit/agents/openai.yaml` | ChatGPT, Codex | the skill's own display name and icon |
 
-`mcp.json` and `.mcp.json` are byte-identical: Claude Code reads `.mcp.json`,
-Agent Plugins clients read `mcp.json`, and a symlink would break Windows
-checkouts. Both are a URL and nothing else; the server speaks OAuth.
+`mcp.json` and `.mcp.json` name the same server (`glasser-seo`) at the same
+URL. Claude Code reads `.mcp.json` and wants `type: "http"`; Agent Plugins
+clients (Codex, ChatGPT) read `mcp.json`, whose schema allows
+`"streamable-http"` and not `"http"`. `check-manifests.mjs` checks each type
+and that both URLs match. Both are a URL and nothing else; the server speaks
+OAuth.
 
 The skill's icon is a byte-identical copy of the plugin's, so the skill keeps
 its icon when distributed alone. Anthropic's directory holds a version for
