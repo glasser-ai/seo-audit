@@ -1,6 +1,6 @@
 {
   "name": "glasser-seo-audit",
-  "version": "0.2.6",
+  "version": "0.2.7",
   "description": "Audit how your own website performs in search, on Semrush, Ahrefs, DataForSEO and Serpstat data. Name a domain and it checks technical and on-page health, rankings and their monthly trend, keyword opportunities, the competitors and keyword gaps that cost you traffic, backlinks and backlink gaps, live search results, and how AI answers cite you. Each area gets a score, and the fixes come ranked by impact with the numbers behind them. Rerun it later to see what changed.",
   "author": {
     "name": "Glasser",
@@ -45,7 +45,7 @@
     "privacyPolicyURL": "https://glasser.ai/privacy-policy",
     "termsOfServiceURL": "https://glasser.ai/terms-of-service",
     "defaultPrompt": [
-      "Run an SEO audit of example.com for the US market.",
+      "Audit example.com's SEO for the US market and tell me what to fix first.",
       "What keywords do my competitors rank for that example.com does not?",
       "Is example.com cited in AI answers, and by which pages?"
     ],
@@ -54,5 +54,64 @@
     "logo": "./assets/icon.png",
     "logoDark": "./assets/icon.png",
     "supportURL": "https://discord.gg/kM5eyKzx5a"
+  },
+  "extensions": {
+    "com.openai": {
+      "review": {
+        "test_cases": {
+          "positive": [
+            {
+              "description": "Full SEO audit of a site the user owns: the plugin plans the calls, collects rankings, competitors, backlinks and an on-page check, then writes a scored report.",
+              "prompt": "Audit glasser.ai's SEO for the US market and tell me what to fix first.",
+              "tools_triggered": "inspect_domain, list_ranked_keywords, discover_competitors, inspect_backlinks, inspect_page",
+              "expected_behavior": "ChatGPT states which data it will pull and asks to go ahead, then calls the tools and returns an audit report: overall and per-category scores, findings with evidence, quick wins and an action plan, each figure citing the run_url of the call it came from."
+            },
+            {
+              "description": "Keyword gap against named competitors.",
+              "prompt": "Which keywords do moz.com and ahrefs.com rank for in the US that backlinko.com does not? Show the top 10.",
+              "tools_triggered": "compare_keyword_gap",
+              "expected_behavior": "A table of up to 10 keywords with search volume and each competitor's position, where backlinko.com does not rank, citing the run_url."
+            },
+            {
+              "description": "Backlink profile of a domain.",
+              "prompt": "Summarise the backlink profile of glasser.ai: backlinks, referring domains and authority.",
+              "tools_triggered": "inspect_backlinks",
+              "expected_behavior": "Totals for backlinks and referring domains plus the provider's authority score, with a short reading of what they mean, citing the run_url."
+            },
+            {
+              "description": "Keyword metrics for a list of target keywords.",
+              "prompt": "Give me US search volume, keyword difficulty and CPC for: seo audit, site audit tool, technical seo checklist.",
+              "tools_triggered": "inspect_keywords",
+              "expected_behavior": "One row per keyword with volume, difficulty and CPC, labelled as the provider's modelled figures, citing the run_url."
+            },
+            {
+              "description": "Visibility in AI answers.",
+              "prompt": "Is notion.so cited in AI answers, and which of its pages are cited most?",
+              "tools_triggered": "inspect_ai_visibility, discover_ai_citations",
+              "expected_behavior": "Counts of AI-answer mentions or citations for notion.so and a list of its most-cited pages, noting that AI answers vary between runs, citing the run_url of each call."
+            }
+          ],
+          "negative": [
+            {
+              "description": "General writing with no request for search data; the plugin should not call any tool.",
+              "prompt": "Write a 500-word blog post about the history of search engines."
+            },
+            {
+              "description": "Unrelated question; the plugin should not be used.",
+              "prompt": "What will the weather be in Paris tomorrow?"
+            },
+            {
+              "description": "Request to access a competitor's private data; the plugin should decline and offer the public data it can provide.",
+              "prompt": "Log into my competitor's Google Search Console and export their click data."
+            }
+          ]
+        },
+        "commerce": false,
+        "commerce_description": "Nothing is sold in ChatGPT. Users sign in to an existing Glasser account with OAuth; no checkout, subscription or upgrade flow appears in the plugin."
+      },
+      "publication": {
+        "release_notes": "First submission of Glasser SEO Audit: one SEO audit skill and the Glasser SEO MCP server (rankings, keywords, competitors and keyword gaps, backlinks, search results, site and page checks, AI search visibility)."
+      }
+    }
   }
 }

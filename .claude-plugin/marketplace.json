@@ -8,14 +8,14 @@
   },
   "metadata": {
     "description": "Glasser SEO Audit: audit your own website on Semrush, Ahrefs, DataForSEO and Serpstat data.",
-    "version": "0.2.6"
+    "version": "0.2.7"
   },
   "plugins": [
     {
       "name": "glasser-seo-audit",
       "source": "./plugins/glasser-seo-audit",
       "description": "Audit how your own website performs in search, on Semrush, Ahrefs, DataForSEO and Serpstat data. Name a domain and it checks technical and on-page health, rankings and their monthly trend, keyword opportunities, the competitors and keyword gaps that cost you traffic, backlinks and backlink gaps, live search results, and how AI answers cite you. Each area gets a score, and the fixes come ranked by impact with the numbers behind them. Rerun it later to see what changed.",
-      "version": "0.2.6",
+      "version": "0.2.7",
       "author": {
         "name": "Glasser",
         "url": "https://glasser.ai"
