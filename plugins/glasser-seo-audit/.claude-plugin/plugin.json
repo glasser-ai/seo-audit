@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "name": "glasser-seo-audit",
+  "displayName": "Glasser SEO Audit",
+  "version": "0.1.0",
+  "description": "SEO audit of your own website on real data from Ahrefs, Semrush, DataForSEO, Serpstat and SerpApi, with no subscription to any of them. Give a domain and get technical and on-page checks, rankings, keyword opportunities, backlinks, competitors and AI search visibility, scored and turned into a prioritised action plan. Run it again to see what changed. You see the estimated cost before it starts and pay per call through Glasser; failed calls and empty results cost $0.00.",
+  "author": {
+    "name": "Glasser",
+    "email": "support@glasser.ai",
+    "url": "https://glasser.ai"
+  },
+  "homepage": "https://glasser.ai",
+  "repository": "https://github.com/glasser-ai/seo-audit",
+  "license": "MIT",
+  "privacyPolicyUrl": "https://glasser.ai/privacy-policy",
+  "termsOfServiceUrl": "https://glasser.ai/terms-of-service",
+  "keywords": [
+    "seo",
+    "seo audit",
+    "site audit",
+    "technical seo",
+    "keyword research",
+    "rankings",
+    "backlinks",
+    "competitor analysis",
+    "ai search visibility",
+    "ahrefs",
+    "semrush",
+    "dataforseo",
+    "serpstat",
+    "serpapi",
+    "glasser"
+  ],
+  "icon": "./assets/icon.png"
+}

@@ -1,0 +1,20 @@
+# Environment and secrets
+.env
+.env.*
+!.env.example
+
+# Local MCP connection credentials
+.cursor/mcp.json
+
+# Node (scripts only; this repo ships no runtime code)
+node_modules/
+
+# OS and editor
+.DS_Store
+*.swp
+*.swo
+
+# Logs and temp
+*.log
+tmp/
+temp/
