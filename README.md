@@ -1,6 +1,6 @@
 # Glasser SEO Audit
 
-An SEO audit of your own website, for Claude and ChatGPT.
+SEO audits, keyword gaps and content research for Claude, ChatGPT and Codex.
 
 Give it a domain. It checks technical and on-page health, rankings and their
 trend, keyword opportunities, organic competitors and the keywords they rank
@@ -38,15 +38,18 @@ ends with a link to every call it used.
 /plugin install glasser-seo-audit@glasser-seo-audit
 ```
 
-**claude.ai, Claude Desktop, ChatGPT** — install **Glasser SEO Audit** from
+**claude.ai, Claude Desktop, ChatGPT, Codex** — install **Glasser SEO Audit** from
 the client's plugin directory.
 
 Then ask, for example:
 
-- *Run an SEO audit of example.com for the US market.*
-- *What keywords do my competitors rank for that example.com does not?*
-- *Is example.com cited in AI answers, and by which pages?*
-- *Here is last month's audit — what has changed?*
+- *Audit my website and show me the three SEO fixes I should make first.*
+- *Find keywords my competitors rank for that my website is missing.*
+- *Find five content ideas for my business, backed by keyword search volume and competition.*
+
+Use your own website or business and target market. If those details are
+missing, the plugin asks before making paid calls. After you connect, return
+to your conversation and send a task to start using the plugin.
 
 ## Authentication
 

@@ -1,8 +1,8 @@
 ---
 name: seo-audit
-description: When the user wants to know how their own website is doing in search and what to do about it — an audit of technical health, rankings, keywords, backlinks and competitors, followed by a prioritised action plan; or a repeat of that audit to see what has changed. Also use when the user mentions "SEO audit", "why am I not ranking", "my traffic dropped", "SEO health check", "what should we fix first", "keyword opportunities", "who outranks us", "backlink profile", "monitor our SEO", or gives a domain and asks how it is performing in search. Input is the user's domain; output is an audit report with findings, an action plan, and a comparison to the previous audit when there is one. Runs on Semrush, Ahrefs, DataForSEO and Serpstat data through this plugin's Glasser SEO tools.
+description: When the user wants to know how their own website is doing in search and what to do about it — an audit of technical health, rankings, keywords, backlinks and competitors, followed by a prioritised action plan; or a repeat of that audit to see what has changed. Also use when the user mentions "SEO audit", "why am I not ranking", "my traffic dropped", "SEO health check", "what should we fix first", "keyword opportunities", "who outranks us", "backlink profile", "monitor our SEO", or asks for content ideas backed by keyword data, a competitor keyword gap, or gives a domain and asks how it is performing in search. For audits and keyword gaps, use the user's domain and target market; for content research, use their business or topic and market. Return the requested findings with evidence, or a full audit report when requested. Runs on Semrush, Ahrefs, DataForSEO and Serpstat data through this plugin's Glasser SEO tools.
 metadata:
-  version: "0.2.8"
+  version: "0.2.9"
   category: seo
 ---
 
@@ -11,6 +11,37 @@ metadata:
 This skill uses the Glasser SEO tools from this plugin's `glasser-seo` connector — one Key across Semrush, Ahrefs, DataForSEO and Serpstat. If the tools are not available, the connector is not connected yet: ask the user to connect it (claude.ai and Claude Desktop: **Customize > Plugins > Glasser SEO Audit > Connectors > Connect**; Claude Code: `/mcp`, select **glasser-seo**, **Authenticate**) and stop.
 
 Use the Glasser SEO tools for all data acquisition here. Reach for another tool only when they have nothing for what is needed.
+
+## Start the first task
+
+Use the website, business and target market already stated in the conversation.
+If the required details are missing, ask one short question before making paid
+calls. A website is needed for a site audit or keyword gap; content research can
+start from a business or topic without a website. Ask for the target country and
+language when the requested data depends on them. Do not assume the US or use a
+placeholder domain. If the user explicitly wants to test a sample domain,
+confirm that intent before spending their balance.
+
+After authorization, continue the original request if its inputs and permission
+are already clear. If the user only asked to connect, ask what they want to do
+first. A balance check confirms available funds; it does not complete an SEO task.
+Describe the planned paid calls and their prices and get the user's go-ahead.
+Keep that approval for the agreed scope; ask again if the scope or cost increases.
+If the requested market is unsupported, explain the limit and ask how to proceed;
+do not silently substitute a different market.
+
+Start with the requested result:
+
+- **Website audit:** inspect the site and relevant search data, then recommend
+  the three fixes with the strongest evidence.
+- **Keyword gap:** use the supplied competitors, or discover them when needed,
+  then compare their ranked keywords against the user's site.
+- **Content ideas:** ask about the business or topic, research related keywords,
+  and compare volume and competition. Return five ideas where the data supports
+  them; mark missing metrics instead of inventing them.
+
+Use the full audit process below for an audit. For a focused request, collect
+only the dimensions needed and return a focused answer with Run URLs.
 
 ## Inputs
 

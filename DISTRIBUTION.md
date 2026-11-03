@@ -33,9 +33,11 @@ the query string is dropped when the token's audience is checked.
 [glasser-ai/skills](https://github.com/glasser-ai/skills) with only what the
 tools force changed: the opening (this plugin's connector instead of the CLI
 install), "endpoint" → "tool" in step 3, and the dimensions table (tool names
-instead of catalog search queries). Inputs, the process, scoring, the report
-format and the untrusted-input rule are the original's text. Port changes to
-those sections by hand; do not add steps the original does not have.
+instead of catalog search queries). The audit process, scoring, report format and untrusted-input rule retain
+the original structure. Version 0.2.9 adds first-task guidance for audits,
+keyword gaps and content ideas, including missing-input questions and
+authorization handoff. Port changes to
+those sections by hand; keep changes to the audit method separate from plugin setup guidance.
 
 ## Naming providers
 
