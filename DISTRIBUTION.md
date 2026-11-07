@@ -8,16 +8,16 @@ consistent.
 | Channel | How it reads this repo | Status |
 |---|---|---|
 | Claude Code, self-hosted marketplace | `/plugin marketplace add glasser-ai/seo-audit` | live on push |
-| Anthropic plugin directory (claude.ai, Claude Desktop) | claude.ai/directory/manage: submit the Glasser MCP server as an MCP connector, then this repo as a Plugin bundle (path `plugins/glasser-seo-audit`) | plugin bundle submitted 2026-10-13, in review; push webhook connected; MCP connector not submitted |
-| ChatGPT / Codex plugin directory | ZIP of `plugins/glasser-seo-audit` uploaded at platform.openai.com/plugins | not submitted |
+| Anthropic plugin directory (claude.ai, Claude Desktop) | claude.ai/directory/manage: submit this repo as a Plugin bundle (path `plugins/glasser-seo-audit`) | v0.2.10 refused by directory policy; scheduled commit checks are active; never live |
 
 ## Release checklist
 
 1. Edit files under `plugins/glasser-seo-audit/`.
 2. `node scripts/bump-version.mjs <version>` — writes the version into the
-   marketplace, the three manifests and the skill frontmatter. Clients pin
+   marketplace, the Claude manifest and the skill frontmatter. Clients pin
    installs to `version`; a change without a bump reaches nobody.
-3. `node scripts/check-manifests.mjs` and `claude plugin validate --strict .`
+3. Run `node scripts/check-manifests.mjs`, `claude plugin validate --strict .`,
+   and `claude plugin validate ./plugins/glasser-seo-audit --strict --profile directory`.
 4. Commit and push.
 5. In Anthropic's directory, click **Check for new commits** and confirm
    the new commit passes **Directory policy**. Local validation does not run
@@ -47,33 +47,32 @@ and Serpstat (and the README Serper). Each was confirmed in the Glasser catalog 
 before release. Re-check before adding or removing one, and do not name a
 provider reached only through a scraper.
 
-## Manifests
+## Claude submission contents
 
-| File | Read by | Carries |
-|---|---|---|
-| `plugin.json` | Agent Plugins clients, Codex | name, version, description; components are discovered from the default locations |
-| `.claude-plugin/plugin.json` | Claude Code, Anthropic's directory | Claude Code metadata: name, display name, version, description, author, homepage, repository, license, keywords |
-| `.codex-plugin/plugin.json` | ChatGPT, Codex | the `interface` block: display name, short description, prompts, icons |
-| `skills/seo-audit/agents/openai.yaml` | ChatGPT, Codex | the skill's own display name and icon |
+The submitted folder is for Claude only. Its complete file list is:
 
-Anthropic's directory refused v0.2.8 because this organization is not
-Verified and the Claude manifest included directory-only fields:
-`documentationUrl`, `privacyPolicyUrl`, `supportUrl`, `termsOfServiceUrl`,
-and `icon`. Keep these out of the Claude manifest even if local validation
-accepts them. `check-manifests.mjs` enforces this package's metadata allowlist.
-The legal links remain in the READMEs, and OpenAI's legal links and icons
-remain in its own overlay. The portable Agent Plugins manifest and bundled
-images produced informational notes, not the directory-policy refusal.
+| File | Purpose |
+|---|---|
+| `.claude-plugin/plugin.json` | Claude metadata |
+| `.mcp.json` | The remote `glasser-seo` MCP server |
+| `skills/seo-audit/SKILL.md` | The audit workflow and report format |
+| `README.md` | Installation, service disclosure, and legal links |
+| `LICENSE` | Plugin license |
+| `assets/icon.png` | Claude's automatically discovered listing icon |
 
-`mcp.json` and `.mcp.json` name the same server (`glasser-seo`) at the same
-URL. Claude Code reads `.mcp.json` and wants `type: "http"`; Agent Plugins
-clients (Codex, ChatGPT) read `mcp.json`, whose schema allows
-`"streamable-http"` and not `"http"`. `check-manifests.mjs` checks each type
-and that both URLs match. Both are a URL and nothing else; the server speaks
-OAuth.
+`.mcp.json` has only a top-level `mcpServers` object. Its single server
+entry has `type: "http"` and the Glasser URL, with no schema annotation or
+credentials; the client signs the user in through OAuth. Skills and the MCP
+server are discovered from Claude's default locations.
 
-The skill's icon is a byte-identical copy of the plugin's, so the skill keeps
-its icon when distributed alone. Anthropic's directory holds a version for
-manual review when bundled text names an image or font file, so only the
-manifests and the OpenAI yaml point at an icon; `check-manifests.mjs` fails if
-a README or the skill does.
+`check-manifests.mjs` enforces the file list, the MCP configuration, Claude
+metadata fields, and matching versions. Additions to the submitted package
+must update this check deliberately.
+
+The directory refused v0.2.8 and v0.2.10 under its policy for configuration
+fields outside the allowed lists. Removing five listing fields cleared the
+individual warnings in v0.2.10, but did not clear the policy refusal. That
+report did not identify the remaining offending file or key. The next
+release removes other-client configuration and the MCP schema annotation;
+the online policy check must still confirm whether this resolves the refusal.
+The README retains the privacy policy and terms of service links.

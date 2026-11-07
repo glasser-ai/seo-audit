@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // Write one version into every place that carries it. Clients pin installs to
-// `version`, so a content change without a bump reaches nobody — and six
-// places is too many to edit by hand consistently.
+// `version`, so a content change needs a bump in the marketplace, the Claude
+// manifest, and the skill metadata.
 import { readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 
@@ -16,8 +16,6 @@ const plugin = "plugins/glasser-seo-audit";
 const targets = [
   [".claude-plugin/marketplace.json", (d) => { d.metadata.version = next; d.plugins[0].version = next; }],
   [`${plugin}/.claude-plugin/plugin.json`, (d) => { d.version = next; }],
-  [`${plugin}/.codex-plugin/plugin.json`, (d) => { d.version = next; }],
-  [`${plugin}/plugin.json`, (d) => { d.version = next; }],
 ];
 for (const [file, apply] of targets) {
   const p = path.join(root, file);
