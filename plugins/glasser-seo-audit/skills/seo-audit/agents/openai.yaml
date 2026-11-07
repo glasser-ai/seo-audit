@@ -1,7 +1,0 @@
-interface:
-  display_name: "SEO Audit"
-  short_description: "SEO audit on Semrush & Ahrefs"
-  icon_small: "./assets/icon.png"
-  icon_large: "./assets/icon.png"
-  brand_color: "#F26339"
-  default_prompt: "Use $seo-audit to audit example.com's SEO for the US market and tell me what to fix first."

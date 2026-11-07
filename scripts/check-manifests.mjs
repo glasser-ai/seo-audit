@@ -1,8 +1,7 @@
 #!/usr/bin/env node
-// Consistency checks for the package: one version everywhere, every manifest
-// naming the same plugin, the mcp.json / .mcp.json pair rule, the directory
-// platform-specific metadata, and the image-name and pipe-to-shell guards.
-import { existsSync, readFileSync } from "node:fs";
+// Check the Claude-only package, shared version, manifest metadata, and MCP
+// configuration before submitting the plugin to Anthropic's directory.
+import { existsSync, readFileSync, readdirSync } from "node:fs";
 import path from "node:path";
 
 const NAME = "glasser-seo-audit";
@@ -27,8 +26,6 @@ const readJson = (p) => {
 
 const claudeMp = readJson(path.join(root, ".claude-plugin/marketplace.json"));
 const claudePl = readJson(path.join(plugin, ".claude-plugin/plugin.json"));
-const codexPl = readJson(path.join(plugin, ".codex-plugin/plugin.json"));
-const agentPl = readJson(path.join(plugin, "plugin.json"));
 const skillPath = path.join(plugin, "skills/seo-audit/SKILL.md");
 const skill = readFileSync(skillPath, "utf8");
 const frontmatter = skill.split("\n---\n")[0];
@@ -41,8 +38,6 @@ const versions = {
   ".claude-plugin/marketplace.json metadata.version": claudeMp?.metadata?.version,
   ".claude-plugin/marketplace.json plugins[0].version": claudeMp?.plugins?.[0]?.version,
   [`plugins/${NAME}/.claude-plugin/plugin.json`]: claudePl?.version,
-  [`plugins/${NAME}/.codex-plugin/plugin.json`]: codexPl?.version,
-  [`plugins/${NAME}/plugin.json`]: agentPl?.version,
   [`plugins/${NAME}/skills/seo-audit/SKILL.md metadata.version`]: frontmatterVersion,
 };
 const distinct = new Set(Object.values(versions));
@@ -56,17 +51,12 @@ if (distinct.size !== 1 || distinct.has(undefined)) {
 for (const [label, name] of [
   ["claude marketplace entry", claudeMp?.plugins?.[0]?.name],
   [".claude-plugin/plugin.json", claudePl?.name],
-  [".codex-plugin/plugin.json", codexPl?.name],
-  ["plugin.json", agentPl?.name],
 ]) {
   if (name !== NAME) fail(`${label}: name is ${JSON.stringify(name)}, expected "${NAME}"`);
 }
 const descriptions = [
   ["claude marketplace entry", claudeMp?.plugins?.[0]?.description],
   [".claude-plugin/plugin.json", claudePl?.description],
-  [".codex-plugin/plugin.json", codexPl?.description],
-  [".codex-plugin/plugin.json interface.longDescription", codexPl?.interface?.longDescription],
-  ["plugin.json", agentPl?.description],
 ];
 if (new Set(descriptions.map(([, d]) => d)).size !== 1) fail("descriptions disagree across manifests");
 // claude.ai refuses an upload whose description is over 500 characters.
@@ -76,83 +66,59 @@ for (const [label, description] of descriptions) {
   }
 }
 
-// 3. The MCP pair: the same URL, valid JSON, and nothing but a URL. Claude
-//    Code reads .mcp.json, Agent Plugins clients read mcp.json; a symlink
-//    would break Windows checkouts. The server speaks OAuth, so a headers
-//    block or a ${VARIABLE} placeholder is a regression to the paste-a-Key setup.
-const mcpRaw = readFileSync(path.join(plugin, "mcp.json"), "utf8");
-const dotRaw = readFileSync(path.join(plugin, ".mcp.json"), "utf8");
-// Claude Code reads .mcp.json and wants type "http"; Agent Plugins clients read
-// mcp.json, whose schema allows "streamable-http" (not "http"). Same server,
-// same URL, each file in its reader's vocabulary.
-let dotMcp = null;
-try {
-  dotMcp = JSON.parse(dotRaw);
-} catch (error) {
-  fail(`.mcp.json is not valid JSON: ${error.message}`);
-}
-const dotServer = dotMcp?.mcpServers?.["glasser-seo"];
-if (dotServer?.url !== MCP_URL) fail(`.mcp.json url must be ${MCP_URL}, got ${JSON.stringify(dotServer?.url)}`);
-if (dotServer?.type !== "http") fail(`.mcp.json glasser-seo.type must be http, got ${JSON.stringify(dotServer?.type)}`);
-let mcp = null;
-try {
-  mcp = JSON.parse(mcpRaw);
-} catch (error) {
-  fail(`mcp.json is not valid JSON: ${error.message}`);
+// 3. This package needs one remote server and no credentials. In particular,
+//    .mcp.json has no editor-schema field or configuration for another client.
+const mcp = readJson(path.join(plugin, ".mcp.json"));
+for (const key of Object.keys(mcp ?? {})) {
+  if (key !== "mcpServers") fail(`.mcp.json: unsupported root field ${key}`);
 }
 const server = mcp?.mcpServers?.["glasser-seo"];
-if (!server) fail("mcp.json must declare mcpServers[\"glasser-seo\"] — the connector name users see, distinct from the Glasser plugin's \"glasser\"");
-if (server && server.url !== MCP_URL) fail(`mcp.json url must be ${MCP_URL}, got ${JSON.stringify(server?.url)}`);
-if (server && "headers" in server) fail("mcp.json must not carry headers — the server signs the user in with OAuth");
-if (/\$\{/.test(mcpRaw)) fail("mcp.json must not reference a ${VARIABLE} — there is no Key to fill in");
-// Anthropic's directory requires every remote MCP server to name its transport.
-if (server && server.type !== "streamable-http") fail(`mcp.json glasser-seo.type must be streamable-http, got ${JSON.stringify(server.type)}`);
-
-// 4. Component discovery is left to the default locations and the portable
-//    manifest; the Claude and Codex manifests only carry listing fields.
-for (const [label, manifest] of [[".claude-plugin/plugin.json", claudePl], [".codex-plugin/plugin.json", codexPl]]) {
-  for (const key of ["skills", "mcpServers"]) {
-    if (manifest && key in manifest) fail(`${label} must not declare ${key} — the default location already loads`);
-  }
+if (Object.keys(mcp?.mcpServers ?? {}).length !== 1 || !server) fail(".mcp.json must declare only mcpServers[\"glasser-seo\"]");
+if (server?.url !== MCP_URL) fail(`.mcp.json url must be ${MCP_URL}, got ${JSON.stringify(server?.url)}`);
+if (server?.type !== "http") fail(`.mcp.json glasser-seo.type must be http, got ${JSON.stringify(server?.type)}`);
+for (const key of Object.keys(server ?? {})) {
+  if (!["type", "url"].includes(key)) fail(`.mcp.json glasser-seo: unsupported field ${key}; this server only needs type and url`);
 }
-if (agentPl?.extensions?.["com.openai"]) fail("plugin.json must not shadow the .codex-plugin/plugin.json overlay");
+
+// 4. Components are discovered from Claude's default locations.
+for (const key of ["skills", "mcpServers"]) {
+  if (claudePl && key in claudePl) fail(`.claude-plugin/plugin.json must not declare ${key} — the default location already loads`);
+}
 const source = claudeMp?.plugins?.[0]?.source;
 if (typeof source !== "string" || !existsSync(path.join(root, source))) {
   fail(`marketplace source does not resolve: ${JSON.stringify(source)}`);
 }
 
-// 5. This organization is not Verified in Anthropic's directory. Its policy
-//    rejected directory-only fields even though Claude's validator accepts
-//    them. Keep this metadata-only manifest to fields Claude Code reads
-//    (plus the editor schema); additions need an explicit policy review.
+// 5. Keep this package's manifest to Claude metadata, the editor schema, and
+//    the documented privacy-policy listing field. This is not an online review.
 const claudeFields = new Set([
   "$schema", "name", "displayName", "version", "description", "author",
-  "homepage", "repository", "license", "keywords",
+  "homepage", "repository", "license", "keywords", "privacyPolicyUrl",
 ]);
 for (const key of Object.keys(claudePl ?? {})) {
-  if (!claudeFields.has(key)) fail(`.claude-plugin/plugin.json ${key} is outside this package's allowed fields for an unverified organization`);
+  if (!claudeFields.has(key)) fail(`.claude-plugin/plugin.json ${key} is outside this package's allowed Claude metadata fields`);
 }
-// OpenAI's display and legal fields stay in its own overlay.
-for (const key of ["privacyPolicyURL", "termsOfServiceURL"]) {
-  if (!codexPl?.interface?.[key]?.startsWith("https://")) fail(`.codex-plugin/plugin.json interface.${key} must be https://`);
-}
-for (const [label, iconRel] of [
-  [".codex-plugin/plugin.json interface.logo", codexPl?.interface?.logo],
-  [".codex-plugin/plugin.json interface.composerIcon", codexPl?.interface?.composerIcon],
-]) {
-  if (typeof iconRel !== "string" || !existsSync(path.join(plugin, iconRel))) fail(`${label} must point at an existing file, got ${JSON.stringify(iconRel)}`);
-}
-// The skill declares its own icon for OpenAI; keep its copy identical.
-const pluginIcon = readFileSync(path.join(plugin, "assets/icon.png"));
-const skillIcon = path.join(plugin, "skills/seo-audit/assets/icon.png");
-if (!existsSync(skillIcon) || !pluginIcon.equals(readFileSync(skillIcon))) fail("skills/seo-audit/assets/icon.png must be a byte-identical copy of assets/icon.png");
+if (claudePl?.privacyPolicyUrl !== "https://glasser.ai/privacy-policy") fail(".claude-plugin/plugin.json must explicitly set privacyPolicyUrl to https://glasser.ai/privacy-policy");
 
-// 6. Anthropic's directory holds a version for manual review when bundled text
-//    names an image or font file. Only manifests may point at the icon.
-for (const textRel of ["README.md", "skills/seo-audit/SKILL.md"]) {
-  if (/\.(png|svg|jpe?g|gif|webp|ico|woff2?|ttf|otf)\b/i.test(readFileSync(path.join(plugin, textRel), "utf8"))) {
-    fail(`plugins/${NAME}/${textRel} names an image or font file`);
+// 6. Review the exact submission contents in CI so unrelated configuration
+//    and unused assets cannot silently return to the Claude bundle.
+const packageFiles = new Set([
+  ".claude-plugin/plugin.json", ".mcp.json", "LICENSE", "README.md", "assets/icon.png",
+  "skills/seo-audit/SKILL.md",
+]);
+function checkFiles(dir, prefix = "") {
+  for (const entry of readdirSync(dir, { withFileTypes: true })) {
+    const name = prefix + entry.name;
+    if (entry.isDirectory()) {
+      checkFiles(path.join(dir, entry.name), `${name}/`);
+    } else if (!entry.isFile() || !packageFiles.has(name)) {
+      fail(`plugins/${NAME}/${name}: not part of the Claude-only package`);
+    }
   }
+}
+checkFiles(plugin);
+for (const file of packageFiles) {
+  if (!existsSync(path.join(plugin, file))) fail(`plugins/${NAME}/${file}: required package file is missing`);
 }
 
 // 7. The skill must never carry a pipe-to-shell install.

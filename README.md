@@ -1,6 +1,6 @@
 # Glasser SEO Audit
 
-An SEO audit of your own website, for Claude and ChatGPT.
+An SEO audit of your own website, for Claude.
 
 Give it a domain. It checks technical and on-page health, rankings and their
 trend, keyword opportunities, organic competitors and the keywords they rank
@@ -38,8 +38,8 @@ ends with a link to every call it used.
 /plugin install glasser-seo-audit@glasser-seo-audit
 ```
 
-**claude.ai, Claude Desktop, ChatGPT** — install **Glasser SEO Audit** from
-the client's plugin directory.
+**claude.ai, Claude Desktop** — install **Glasser SEO Audit** from
+Claude's plugin directory once the listing is published.
 
 Then ask, for example:
 
@@ -76,11 +76,11 @@ own. The service behind these endpoints is governed by Glasser's
 ```
 .claude-plugin/marketplace.json     Claude Code marketplace
 plugins/glasser-seo-audit/
-├── plugin.json                     portable manifest (Agent Plugins); clients discover the skill and MCP from it
-├── .claude-plugin/plugin.json      Claude manifest and directory listing fields
-├── .codex-plugin/plugin.json       ChatGPT / Codex display overlay
-├── .mcp.json, mcp.json             the Glasser MCP server, same URL (type http / streamable-http)
-├── assets/                         icon
+├── .claude-plugin/plugin.json      Claude manifest
+├── .mcp.json                       the Glasser MCP server (type http)
+├── assets/                         Claude listing icon
+├── LICENSE
+├── README.md
 └── skills/seo-audit/               the audit workflow and report format
 scripts/                            consistency check and the version bump
 ```

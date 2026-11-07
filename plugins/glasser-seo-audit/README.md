@@ -27,7 +27,7 @@ Authentication and the list of network endpoints are in the
 | Component | File |
 |---|---|
 | Skill | `skills/seo-audit/SKILL.md` |
-| MCP server | `.mcp.json` (and `mcp.json` for clients that read that name) |
+| MCP server | `.mcp.json` |
 
 The MCP config points at `https://api.glasser.ai/mcp?toolset=seo` and carries no
 credentials: the server speaks OAuth, so the client signs the user in on
