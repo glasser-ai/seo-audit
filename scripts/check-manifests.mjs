@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // Consistency checks for the package: one version everywhere, every manifest
 // naming the same plugin, the mcp.json / .mcp.json pair rule, the directory
-// listing fields, and the image-name and pipe-to-shell guards.
+// platform-specific metadata, and the image-name and pipe-to-shell guards.
 import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
 
@@ -121,16 +121,22 @@ if (typeof source !== "string" || !existsSync(path.join(root, source))) {
   fail(`marketplace source does not resolve: ${JSON.stringify(source)}`);
 }
 
-// 5. Directory listing fields: Anthropic reads them from the Claude manifest,
-//    OpenAI from the Codex overlay. Keep the two pointing at the same pages.
-if (!claudePl?.privacyPolicyUrl?.startsWith("https://") || claudePl.privacyPolicyUrl !== codexPl?.interface?.privacyPolicyURL) {
-  fail(".claude-plugin/plugin.json privacyPolicyUrl must be https:// and match .codex-plugin interface.privacyPolicyURL");
+// 5. This organization is not Verified in Anthropic's directory. Its policy
+//    rejected directory-only fields even though Claude's validator accepts
+//    them. Keep this metadata-only manifest to fields Claude Code reads
+//    (plus the editor schema); additions need an explicit policy review.
+const claudeFields = new Set([
+  "$schema", "name", "displayName", "version", "description", "author",
+  "homepage", "repository", "license", "keywords",
+]);
+for (const key of Object.keys(claudePl ?? {})) {
+  if (!claudeFields.has(key)) fail(`.claude-plugin/plugin.json ${key} is outside this package's allowed fields for an unverified organization`);
 }
-if (!claudePl?.termsOfServiceUrl?.startsWith("https://") || claudePl.termsOfServiceUrl !== codexPl?.interface?.termsOfServiceURL) {
-  fail(".claude-plugin/plugin.json termsOfServiceUrl must be https:// and match .codex-plugin interface.termsOfServiceURL");
+// OpenAI's display and legal fields stay in its own overlay.
+for (const key of ["privacyPolicyURL", "termsOfServiceURL"]) {
+  if (!codexPl?.interface?.[key]?.startsWith("https://")) fail(`.codex-plugin/plugin.json interface.${key} must be https://`);
 }
 for (const [label, iconRel] of [
-  [".claude-plugin/plugin.json icon", claudePl?.icon],
   [".codex-plugin/plugin.json interface.logo", codexPl?.interface?.logo],
   [".codex-plugin/plugin.json interface.composerIcon", codexPl?.interface?.composerIcon],
 ]) {
