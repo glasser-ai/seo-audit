@@ -10,6 +10,7 @@
     "url": "https://glasser.ai"
   },
   "homepage": "https://glasser.ai",
+  "privacyPolicyUrl": "https://glasser.ai/privacy-policy",
   "repository": "https://github.com/glasser-ai/seo-audit",
   "license": "MIT",
   "keywords": [

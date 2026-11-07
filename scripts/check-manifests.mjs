@@ -89,15 +89,16 @@ if (typeof source !== "string" || !existsSync(path.join(root, source))) {
   fail(`marketplace source does not resolve: ${JSON.stringify(source)}`);
 }
 
-// 5. Keep this package's metadata-only manifest to Claude Code fields plus
-//    the editor schema. This does not replicate the online policy review.
+// 5. Keep this package's manifest to Claude metadata, the editor schema, and
+//    the documented privacy-policy listing field. This is not an online review.
 const claudeFields = new Set([
   "$schema", "name", "displayName", "version", "description", "author",
-  "homepage", "repository", "license", "keywords",
+  "homepage", "repository", "license", "keywords", "privacyPolicyUrl",
 ]);
 for (const key of Object.keys(claudePl ?? {})) {
-  if (!claudeFields.has(key)) fail(`.claude-plugin/plugin.json ${key} is outside this package's allowed fields for an unverified organization`);
+  if (!claudeFields.has(key)) fail(`.claude-plugin/plugin.json ${key} is outside this package's allowed Claude metadata fields`);
 }
+if (claudePl?.privacyPolicyUrl !== "https://glasser.ai/privacy-policy") fail(".claude-plugin/plugin.json must explicitly set privacyPolicyUrl to https://glasser.ai/privacy-policy");
 
 // 6. Review the exact submission contents in CI so unrelated configuration
 //    and unused assets cannot silently return to the Claude bundle.

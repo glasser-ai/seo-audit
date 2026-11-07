@@ -75,4 +75,6 @@ individual warnings in v0.2.10, but did not clear the policy refusal. That
 report did not identify the remaining offending file or key. The next
 release removes other-client configuration and the MCP schema annotation;
 the online policy check must still confirm whether this resolves the refusal.
-The README retains the privacy policy and terms of service links.
+The README retains the privacy policy and terms of service links. The Claude
+manifest also sets the documented `privacyPolicyUrl` listing field explicitly
+so the local directory check does not report a missing privacy policy URL.
