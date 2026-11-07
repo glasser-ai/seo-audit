@@ -2,7 +2,7 @@
 name: seo-audit
 description: When the user wants to know how their own website is doing in search and what to do about it — an audit of technical health, rankings, keywords, backlinks and competitors, followed by a prioritised action plan; or a repeat of that audit to see what has changed. Also use when the user mentions "SEO audit", "why am I not ranking", "my traffic dropped", "SEO health check", "what should we fix first", "keyword opportunities", "who outranks us", "backlink profile", "monitor our SEO", or asks for content ideas backed by keyword data, a competitor keyword gap, or gives a domain and asks how it is performing in search. For audits and keyword gaps, use the user's domain and target market; for content research, use their business or topic and market. Return the requested findings with evidence, or a full audit report when requested. Runs on Semrush, Ahrefs, DataForSEO and Serpstat data through this plugin's Glasser SEO tools.
 metadata:
-  version: "0.2.9"
+  version: "0.2.10"
   category: seo
 ---
 

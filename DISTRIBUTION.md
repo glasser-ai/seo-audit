@@ -19,6 +19,9 @@ consistent.
    installs to `version`; a change without a bump reaches nobody.
 3. `node scripts/check-manifests.mjs` and `claude plugin validate --strict .`
 4. Commit and push.
+5. In Anthropic's directory, click **Check for new commits** and confirm
+   the new commit passes **Directory policy**. Local validation does not run
+   that policy review.
 
 ## The MCP server and the skill
 
@@ -51,9 +54,18 @@ provider reached only through a scraper.
 | File | Read by | Carries |
 |---|---|---|
 | `plugin.json` | Agent Plugins clients, Codex | name, version, description; components are discovered from the default locations |
-| `.claude-plugin/plugin.json` | Claude Code, Anthropic's directory | listing fields: `icon`, `privacyPolicyUrl`, `termsOfServiceUrl` |
+| `.claude-plugin/plugin.json` | Claude Code, Anthropic's directory | Claude Code metadata: name, display name, version, description, author, homepage, repository, license, keywords |
 | `.codex-plugin/plugin.json` | ChatGPT, Codex | the `interface` block: display name, short description, prompts, icons |
 | `skills/seo-audit/agents/openai.yaml` | ChatGPT, Codex | the skill's own display name and icon |
+
+Anthropic's directory refused v0.2.8 because this organization is not
+Verified and the Claude manifest included directory-only fields:
+`documentationUrl`, `privacyPolicyUrl`, `supportUrl`, `termsOfServiceUrl`,
+and `icon`. Keep these out of the Claude manifest even if local validation
+accepts them. `check-manifests.mjs` enforces this package's metadata allowlist.
+The legal links remain in the READMEs, and OpenAI's legal links and icons
+remain in its own overlay. The portable Agent Plugins manifest and bundled
+images produced informational notes, not the directory-policy refusal.
 
 `mcp.json` and `.mcp.json` name the same server (`glasser-seo`) at the same
 URL. Claude Code reads `.mcp.json` and wants `type: "http"`; Agent Plugins
