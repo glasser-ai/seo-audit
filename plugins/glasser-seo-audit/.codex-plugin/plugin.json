@@ -45,9 +45,9 @@
     "privacyPolicyURL": "https://glasser.ai/privacy-policy",
     "termsOfServiceURL": "https://glasser.ai/terms-of-service",
     "defaultPrompt": [
-      "Audit my website and show me the three SEO fixes I should make first.",
-      "Find keywords my competitors rank for that my website is missing.",
-      "Find five content ideas for my business, backed by keyword search volume and competition."
+      "Audit example.com's SEO for the US market and tell me what to fix first.",
+      "What keywords do my competitors rank for that example.com does not?",
+      "Is example.com cited in AI answers, and by which pages?"
     ],
     "brandColor": "#F26339",
     "composerIcon": "./assets/icon.png",

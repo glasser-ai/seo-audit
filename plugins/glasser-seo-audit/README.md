@@ -19,14 +19,7 @@ Claude Code:
 /plugin install glasser-seo-audit --marketplace glasser-ai/seo-audit
 ```
 
-Then ask:
-
-- *Audit my website and show me the three SEO fixes I should make first.*
-- *Find keywords my competitors rank for that my website is missing.*
-- *Find five content ideas for my business, backed by keyword search volume and competition.*
-
-Return to the conversation after connecting and send your task. The plugin
-asks for your website or business and target market if they are missing.
+Then ask: *"Run an SEO audit of example.com for the US market."*
 
 Authentication and the list of network endpoints are in the
 [repository README](https://github.com/glasser-ai/seo-audit#readme).
